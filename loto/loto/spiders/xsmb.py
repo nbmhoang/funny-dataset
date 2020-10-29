@@ -17,10 +17,16 @@ class XsmbSpider(scrapy.Spider):
         current_year = response.meta.get('year')
         l = response.css('div[title*="'+current_year+'"]::text').getall()
         self.logger.info(current_year, len(l))
-        # self.logger.info()
         for result in l:
             s = result.strip()
             if s:
-                yield {
-                    'num': s
-                }
+                try:
+                    s = int(s)
+                    yield {
+                        'num': s
+                    }
+                except ValueError:
+                    pass
+            
+            
+            
