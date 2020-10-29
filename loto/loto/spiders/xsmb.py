@@ -15,18 +15,17 @@ class XsmbSpider(scrapy.Spider):
 
     def parse(self, response):
         current_year = response.meta.get('year')
-        l = response.css('div[title*="'+current_year+'"]::text').getall()
+        l = response.css('div[title*="'+current_year+'"]')
         self.logger.info(current_year, len(l))
         for result in l:
-            s = result.strip()
-            if s:
+            date = result.css('::attr(title)').get()
+            text = result.css('::text').get().strip()
+            if text:
                 try:
-                    s = int(s)
+                    s = int(text)
                     yield {
+                        'date': date[:2],
                         'num': s
                     }
                 except ValueError:
-                    pass
-            
-            
-            
+                    continue
