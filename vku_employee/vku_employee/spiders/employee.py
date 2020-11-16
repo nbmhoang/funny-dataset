@@ -17,6 +17,6 @@ class EmployeeSpider(scrapy.Spider):
         # self.logger.info(len(names))
         for ava, name in zip(avatar, fullname):
             yield {
-                'avatar_url': self.url + '/'.join(ava.replace('\r\n\t\t\t\t', '').split('/')[1:]),
+                'avatar_url': 'http://vku.udn.vn/' + '/'.join(ava.replace('\r\n\t\t\t\t', '').split('/')[1:]),
                 'name': name
             }
